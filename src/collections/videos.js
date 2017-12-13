@@ -1,16 +1,20 @@
 var Videos = Backbone.Collection.extend({
-  model: Video
-  // url: 'src/data/exampleVideoData.js'
+  model: Video,
+  url: 'https://www.googleapis.com/youtube/v3/search',
+  search: function(query) {
+    this.fetch({
+      data: {
+        part: 'snippet',
+        key: window.YOUTUBE_API_KEY,
+        q: query,
+        maxResults: 5,
+        type: 'video',
+        videoEmbeddable: 'true'
+      }
+    });
+  },
+
+  parse: function(response) {
+    return response.items;
+  }
 });
-
-
-// SUBMIT TICKET ABOUT THIS
-// var videos = new Videos();
-// videos.fetch();
-
-
-// // /*
-// // var exampleVideos = window.exampleVideoData.map(function(video) {
-// //   return new Video(video);
-// // })
-// //  */
